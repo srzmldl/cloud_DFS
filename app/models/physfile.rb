@@ -15,7 +15,8 @@ class Physfile < ActiveRecord::Base
 			return false
 		else
 			file.frag_num = num
+			file.save
 			return true
-		end	
+		end
 	end
 end
