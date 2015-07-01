@@ -15,5 +15,11 @@ class Database < ActiveRecord::Migration
 			f.string :addr
 			f.integer :phys_id		
 		end
+		create_table :users do |u|
+			u.string :name
+			u.string :password
+			u.date :register_date
+			u.integer :root_id
+		end
 	end
 end
