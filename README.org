@@ -8,9 +8,14 @@
   - Weijia Xu (models, database)
   - Zixiong Su (models, database)
 
-* software
+* Software
   - ruby 2.2.1p85 (2015-02-26 revision 49769)
   - sqlite3 3.8.2 2013-12-06 14:53:30
   - Rails 4.2.0
 
-
+* Reference
+  - [[https://labs.kollegorna.se/blog/2015/04/build-an-api-now/][Build API]] ([[https://ruby-china.org/topics/25822][Chinese Version(not completed enough)]])
+  - [[https://github.com/vasilakisfil/rails_tutorial_ember][rails_tutorial_ember on github]]
+  - [[https://www.railstutorial.org/][RUBY ON RAILS TUTORIAL (3RD ED.)]]
+  - [[https://github.com/rubygems/rubygems.org][sample app(rubygems.org) to learn ruby api]]
+  - [[http://rogerdudler.github.io/git-guide/index.zh.html][Good git guide]]
