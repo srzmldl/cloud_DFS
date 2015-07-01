@@ -27,6 +27,7 @@ class Fragfile < ActiveRecord::Base
 			return false
 		else
 			file.addr = addr
+			file.save
 			return true
 		end	
 	end
