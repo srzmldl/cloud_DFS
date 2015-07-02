@@ -3,6 +3,8 @@
 
 
 * Member
+  - Kai Xing(Professor)
+  - Yishuai Li(TA.)
   - Dinglong Li (routes, controllers)
   - Luxin Han (views, json)
   - Weijia Xu (models, database)

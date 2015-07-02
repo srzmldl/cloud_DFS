@@ -3,5 +3,15 @@
 #
 # Examples:
 #
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+#cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#Mayor.create(name: 'Emanuel', city: cities.first)
+users = User.create([
+             {
+               name: 'Vincent',
+               register_date: DateTime.now
+             },
+             {
+               name: 'Vincent1',
+               register_date: DateTime.now
+             }
+            ])

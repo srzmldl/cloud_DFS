@@ -1,5 +1,7 @@
 require './app/models/virfile'
 class User < ActiveRecord::Base
+
+  attr_accessor :name, :register_date;
 	def login(name = '', password = '')
 		user = User.find_by(name: name, password: password)
 		if user == nil
