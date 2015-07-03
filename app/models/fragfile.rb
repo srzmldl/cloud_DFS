@@ -1,4 +1,4 @@
-require './physfile'
+load 'physfile.rb'
 class Fragfile < ActiveRecord::Base
 	def creat(phys_id = -1, addr = '')
 		#if physical-file is non-exist, return false
