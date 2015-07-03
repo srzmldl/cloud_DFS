@@ -1,4 +1,4 @@
-require './app/models/virfile'
+load 'virfile.rb'
 class User < ActiveRecord::Base
 
   attr_accessor :name, :register_date;
@@ -12,7 +12,9 @@ class User < ActiveRecord::Base
 	end
 	#|name| < 3 return -1
 	#|psw|  < 6 return -2
+	# user exist return -3
 	def register(name = '', psw = '')
+<<<<<<< HEAD
       if name.length < 3
         return -1
       elsif	psw.length < 6
@@ -21,6 +23,20 @@ class User < ActiveRecord::Base
         user = User.create(name: name, password: psw, register_date: Time.now)
         return user
       end
+=======
+		if name.length < 3
+			return -1
+		elsif	psw.length < 6
+			return -2
+		else 
+			exuser = User.find_by(name: name)
+			if exuser != nil
+				return -3
+			end
+			user = User.create(name: name, password: psw, register_date: Time.now)
+			return user
+		end
+>>>>>>> 65d261dd1b26c1e72c399beb0f875424b8412ee1
 	end
 	#root: root directory file (virtual)
 	#this method is used to modify the root_id
