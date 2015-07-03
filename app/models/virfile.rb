@@ -14,6 +14,7 @@ class Virfile < ActiveRecord::Base
 		end
 		return a
 	end
+    
 	def creat(path = '', name = 'New', physid = -1)
 		fa = find_by_path(path)
 		if fa == nil

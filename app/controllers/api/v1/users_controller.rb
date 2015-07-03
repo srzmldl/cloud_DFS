@@ -17,9 +17,9 @@ class Api::V1::UsersController < ApplicationController
       @state = tmp
     end
   end
-  
+
   private
-  
+
   def create_params
     params.require(:user).permit(:name, :password)
   end
