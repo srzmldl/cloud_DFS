@@ -1,9 +1,11 @@
 class Api::V1::UsersController < ApplicationController
 
+  #return id, name, register_date, root_id
   def show
     @user = User.find(params[:id])
   end
-  
+
+  #return @state and @user(format like show)
   def create
     @user = User.find_by(name: create_params[:name])
     @state = 0;
@@ -15,6 +17,8 @@ class Api::V1::UsersController < ApplicationController
     tmp = register(name: create_params[:name], psw: create_params[:password])
     if (tmp == -1) || (tmp == -2) || (tmp == -3)
       @state = tmp
+      @user = nil
+    else @user = tmp
     end
   end
 
