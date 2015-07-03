@@ -1,4 +1,4 @@
-load 'app/models/virfile.rb'
+load 'virfile.rb'
 class User < ActiveRecord::Base
 
   attr_accessor :name, :register_date;
