@@ -1,39 +1,51 @@
-* users_controller
-** show
-   GET    /api/v1/users/:id(.:format)
-   
-   return {@user, :id, :name, :register_date, :root_id}.
-** create
-   POST   /api/v1/users(.:format)
-   
-   receive {:name, :password}; 
+* Files
+| Name                   | Description                            |
+| README.org             | this file                              |
+| base_controller.rb     | base controller                        |
+| sessions_controller.rb | log in                                 |
+| users_controller.rb    | user create, show                      |
+| virfiles_controller.rb | The file system that user could access |
 
-   feedback {@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @state
+
+* Description
+** users_controller
    
-   Meaning of state:
-     - -1  |name| < 3
-     - -2  |password| < 6
-     - -3 user already exist.
-     - 0 no error
-       
-       
-* sessions_controller(login)
-  
-** creat  
-   POST   /api/v1/sessions(.:format) 
-   
-   Receive {@user, :name, password}
-   
-   feedback{@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @flag(true means success).
+*** show
+    GET    /api/v1/users/:id(.:format)
+    
+    return {@user, :id, :name, :register_date, :root_id}.
+*** create
+    POST   /api/v1/users(.:format)
+    
+    receive {:name, :password}; 
 
-* virfiles_controlle
+    feedback {@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @state
+    
+    Meaning of state:
+      - -1  |name| < 3
+      - -2  |password| < 6
+      - -3 user already exist.
+      - 0 no error
+        
+        
+** sessions_controller(login)
 
-** TODO index
-   
-** TODO create
+*** creat  
+    POST   /api/v1/sessions(.:format) 
+    
+    Receive {@user, :name, password}
+    
+    feedback{@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @flag(true means success).
 
-** TODO show
 
-** TODO destroy
+** virfiles_controlle
 
-** TODO update
+*** TODO index
+    
+*** TODO create
+
+*** TODO show
+
+*** TODO destroy
+
+*** TODO update
