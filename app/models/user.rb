@@ -1,7 +1,7 @@
 load 'virfile.rb'
 class User < ActiveRecord::Base
 
-  attr_accessor :name, :register_date;
+  attr_accessor :id, :name, :register_date, :root_id;
 	def login(name = '', password = '')
 		user = User.find_by(name: name, password: password)
 		if user == nil
