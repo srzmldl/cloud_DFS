@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :fragfiles, only: [:index, :create, :show, :update, :destroy]
       resources :physfiles, only: [:index, :create, :show, :update, :destroy]
       resources :virfiles, only: [:index, :create, :show, :update, :destroy]
+      resources :sessions, only: [:create]
       # 原文有 microposts, 我们现在把它注释掉
       # resources :microposts, only: [:index, :create, :show, :update, :destroy]
     end
