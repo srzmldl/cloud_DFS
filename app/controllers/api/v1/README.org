@@ -1,0 +1,20 @@
+* users_controller
+** show
+   GET    /api/v1/users/:id(.:format)
+   return {@user, :id, :name, :register_date, :root_id}.
+** create
+   POST   /api/v1/users(.:format)
+   receive {:name, :password}; feedback {@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @state
+   Meaning of state:
+     - -1  |name| < 3
+     - -2  |password| < 6
+     - -3 user already exist.
+     - 0 no error
+
+** TODO sign in
+
+* virfiles_controlle
+
+** TODO index
+ 
+** TODO 
