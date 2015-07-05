@@ -30,7 +30,7 @@
         
 ** sessions_controller(login)
 
-*** creat  
+*** create  
     POST   /api/v1/sessions(.:format) 
     
     Receive {@user, :name, password}
