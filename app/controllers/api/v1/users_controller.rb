@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
 
+  skip_before_filter  :verify_authenticity_token
   #return id, name, register_date, root_id
   def show
     @user = User.find(params[:id])

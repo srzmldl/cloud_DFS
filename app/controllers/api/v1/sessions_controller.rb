@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class Api::V1::SessionsController < ApplicationController
+
+  skip_before_filter  :verify_authenticity_token
   def create
     @flag = login(name: create_params[:name], password: create_params[:password])
     if @flag

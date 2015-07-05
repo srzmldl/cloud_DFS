@@ -1,5 +1,6 @@
 class Api::V1::VirfilesController < ApplicationController
-
+  
+  skip_before_filter  :verify_authenticity_token
   #create file/files
   def create
   end
