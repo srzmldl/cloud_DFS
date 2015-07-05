@@ -12,8 +12,9 @@ class Api::V1::UsersController < ApplicationController
     # -2 |psw| < 6
     # -3 user already exist
     # 0 normal
+    @user = User.new(name: create_params[:name], password: create_params[:password]);
     @state = 0
-    tmp = User.register(name: create_params[:name], psw: create_params[:password])
+    tmp = @user.register(name: create_params[:name], psw: create_params[:password])
     if (tmp == -1) || (tmp == -2) || (tmp == -3)
       @state = tmp
       @user = nil
