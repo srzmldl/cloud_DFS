@@ -8,14 +8,12 @@ class Api::V1::UsersController < ApplicationController
 
   #return @state and @user(format like show)
   def create
-    @user = User.find_by(name: create_params[:name])
-    @state = 0;
     # -1 |name| < 3
     # -2 |psw| < 6
     # -3 user already exist
     # 0 normal
     @state = 0
-    tmp = register(name: create_params[:name], psw: create_params[:password])
+    tmp = User.register(name: create_params[:name], psw: create_params[:password])
     if (tmp == -1) || (tmp == -2) || (tmp == -3)
       @state = tmp
       @user = nil
