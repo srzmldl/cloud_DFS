@@ -1,3 +1,4 @@
-json.user do
+json.session do
   json.(@user, :id, :name, :register_date, :root_id)
-end
+  json.(@flag)
+endc

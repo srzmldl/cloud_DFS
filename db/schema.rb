@@ -23,8 +23,12 @@ ActiveRecord::Schema.define(version: 20150701073750) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "name"
+    t.string   "password"
+    t.date     "register_date"
+    t.integer  "root_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "virfiles", force: :cascade do |t|
