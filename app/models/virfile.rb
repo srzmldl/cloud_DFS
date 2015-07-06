@@ -1,4 +1,5 @@
 class Virfile < ActiveRecord::Base
+    class << self
 	def list(path = '')
 		fa = find_by_path(path)
 		if fa == nil
@@ -70,4 +71,5 @@ class Virfile < ActiveRecord::Base
 		end
 		return file
 	end
+    end
 end

@@ -1,7 +1,8 @@
 load 'virfile.rb'
 class User < ActiveRecord::Base
+    attr_readonly :id, :name, :register_date, :root_id;
 
-  attr_accessor :id, :name, :register_date, :root_id;
+    class << self
 	def login(name = '', password = '')
 		user = User.find_by(name: name, password: password)
 		if user == nil
@@ -35,8 +36,7 @@ class User < ActiveRecord::Base
 		if user == nil
 			return false
 		else 
-			file = Virfile.new
-			file = file.find_by_path(root)
+			file = Virfile.find_by_path(root)
 			if file	== nil or file.fa != 0 or file.visible == false
 				return false
 			else
@@ -60,4 +60,5 @@ class User < ActiveRecord::Base
 			return true
 		end
 	end
+    end
 end

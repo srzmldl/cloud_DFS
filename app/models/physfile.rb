@@ -1,4 +1,5 @@
 class Physfile < ActiveRecord::Base
+    class << self
 	def creat(num = 0)
 		file = Physfile.create(frag_num: num)
 		return file
@@ -19,4 +20,5 @@ class Physfile < ActiveRecord::Base
 			return true
 		end
 	end
+    end
 end
