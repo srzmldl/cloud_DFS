@@ -1,3 +1,4 @@
 json.session do
-  json.(@user, :id, :name, :register_date, :root_id， @flag)
-endc
+  #json.(@user, :id, :name, :register_date, :root_id, @state)
+  json.(@state)
+end
