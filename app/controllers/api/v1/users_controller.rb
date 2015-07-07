@@ -16,8 +16,6 @@ class Api::V1::UsersController < ApplicationController
     tmp = User.register(create_params[:name], create_params[:password])
     if (tmp == -1) || (tmp == -2) || (tmp == -3)
       @state = tmp
-      #@user = User.new(name: 'abcdefg', password: '1234567');
-      #@user.save;
       @user = nil;
     else @user = tmp
     end
