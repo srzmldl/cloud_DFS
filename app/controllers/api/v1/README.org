@@ -11,32 +11,36 @@
 ** users_controller
    
 *** show
-    GET    /api/v1/users/:id(.:format)
-    
-    return {@user, :id, :name, :register_date, :root_id}.
-*** create
-    POST   /api/v1/users(.:format)
-    
-    receive {:name, :password}; 
-
-    feedback {@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @state
-    
-    Meaning of state:
-      - -1  |name| < 3
-      - -2  |password| < 6
-      - -3 user already exist.
-      - 0 no error
-        
+    - GET    /api/v1/users/:id(.:format)
+    - return {@user, :id, :name, :register_date, :root_id}.
+    - e.g.
+      + curl -i http://localhost:3000/api/v1/users/6
+      + {"user":{"id":6,"name":"abcdefg","register_date":null,"root_id":null}}
+ 
+*** create(register)
+    - POST   /api/v1/users(.:format)
+    - receive {:name, :password}; 
+    - feedback {@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @state
+    - Meaning of state:
+      + -1  |name| < 3
+      + -2  |password| < 6
+      + -3 user already exist.
+      + 0 no error
+    - e.g.
+      + curl -i -=vincent0&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/users
+      + {"user":{"id":12,"name":"vincent0","register_date":"2015-07-09","root_id":null,"state":0}}
         
 ** sessions_controller(login)
-
-*** create  
-    POST   /api/v1/sessions(.:format) 
-    
-    Receive {@user, :name, password}
-    
-    feedback{@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @flag(true means success).
-
+   
+*** create(login)  
+    - POST   /api/v1/sessions(.:format)
+    - Receive {@user, :name, password}
+    - feedback{@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @flag(true means success).
+    - e.g.   
+      + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/sessions
+      + {"user":{"id":11,"name":"vincent6","register_date":"2015-07-07","root_id":null,"flag":true}}
+        
+        
 
 ** virfiles_controlle
 
