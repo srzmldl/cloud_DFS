@@ -11,45 +11,66 @@
 ** users_controller
    
 *** show
+    - get the information of user by id
     - GET    /api/v1/users/:id(.:format)
     - return {@user, :id, :name, :register_date, :root_id}.
+      + attribute of @user :id, :name, :register_date, :root_id
     - e.g.
       + curl -i http://localhost:3000/api/v1/users/6
       + {"user":{"id":6,"name":"abcdefg","register_date":null,"root_id":null}}
  
 *** create(register)
+    - register a new user
     - POST   /api/v1/users(.:format)
     - receive {:name, :password}; 
-    - feedback {@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @state
-    - Meaning of state:
-      + -1  |name| < 3
-      + -2  |password| < 6
-      + -3 user already exist.
-      + 0 no error
+    - feedback {@user, @state}
+      * Meaning of state:
+        + -1  |name| < 3
+        + -2  |password| < 6
+        + -3 user already exist.
+        + 0 no error
+      * attribute of @user: as same as those in show
     - e.g.
-      + curl -i -=vincent0&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/users
-      + {"user":{"id":12,"name":"vincent0","register_date":"2015-07-09","root_id":null,"state":0}}
-        
+      + curl -i -X POST -d "user[name]=vincent1&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/users
+      + {"state":-3}
+    - e.g.
+      + curl -i -X POSame]=vincent10&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/users
+      + {"state":0,"user":{"id":17,"name":"vincent10","register_date":"2015-07-09","root_id":null}}
+         
 ** sessions_controller(login)
    
-*** create(login)  
+*** create(login)
+    - login and get user information
     - POST   /api/v1/sessions(.:format)
     - Receive {@user, :name, password}
-    - feedback{@user, :id, :name, :register_date, :root_id}(if error, then nil instead) and @flag(true means success).
+    - feedback {login_suc, @user}
+      + login_suc = true if success.
+      + @user = nil when login_suc == false
+      + attribute of @user :id, :name, :register_date, :root_id
     - e.g.   
       + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/sessions
-      + {"user":{"id":11,"name":"vincent6","register_date":"2015-07-07","root_id":null,"flag":true}}
-        
+      + {"login_suc":true,"user":{"id":11,"name":"vincent6","register_date":"2015-07-07","root_id":null}}
+    - e.g.
+      + curl -i -ame]=vincent6&user[password]=hlxdsbyb1112" http://localhost:3000/api/v1/sessions
+      + {"login_suc":false}
         
 
-** virfiles_controlle
+** virfiles_controller
 
-*** TODO index
+*** index(list all the files in the directory)
+  - list files and directory in :path of :user_name
+  - GET    /api/v1//virfiles(.:format)
+  - receive {abs_path}
+    + attribute :user_name, :path
+  - feedback {list, if_file}
+    + list is an array, its element is virfiles(:id, :name)
+    + if_file == 1 means it's a file, a directory otherwise.
+  - e.g.
+  - 
+*** create
+    - create :path/:name to :user_name
+*** show
+    - show all the frag of :path
+*** destroy
+    - delete :path of :user_name
     
-*** TODO create
-
-*** TODO show
-
-*** TODO destroy
-
-*** TODO update

@@ -11,12 +11,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: [:index, :create, :show, :update, :destroy]
-      resources :virfiles, only: [:index, :create, :show, :update, :destroy]
       resources :sessions, only: [:create]
-      # 原文有 microposts, 我们现在把它注释掉
-      # resources :microposts, only: [:index, :create, :show, :update, :destroy]
+      resources :virfiles, only: [:index, :create, :show, :update, :destroy]
     end
-end
+  end
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
