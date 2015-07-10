@@ -1,14 +1,14 @@
 load 'physfile.rb'
 class Fragfile < ActiveRecord::Base
     class << self
-	def creat(phys_id = -1, addr = '')
+	def creat(phys_id = -1, addr = '', index = -1)
 		#if physical-file is non-exist, return false
 		phys = Physfile.find_id(phys_id)
-		if(phys == nil)
+		if(phys == nil or index < 0)
 			return false
 		end
 
-		file = Fragfile.create(phys_id: phys_id, addr: addr)
+		file = Fragfile.create(phys_id: phys_id, addr: addr, index: index)
 		return file
 	end	
 	#find by physical-file id
