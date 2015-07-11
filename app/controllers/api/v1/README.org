@@ -18,7 +18,7 @@
     - e.g.
       + curl -i http://lys.webcam/api/v1/users/6
       + {"user":{"id":6,"name":"abcdefg","register_date":null,"root_id":null}}
-   
+        
 *** create(register)
     - register a new user
     - POST   /api/v1/users(.:format)
@@ -33,10 +33,10 @@
 
 
     - e.g.
-      + curl -i -X POST -d=test-user-01@mail.com&user[password]=123123" http://lys.webcam/api/v1/users
+      + curl -i -X POST -d "user[name]=test-user-01@mail.com&user[password]=123123" http://lys.webcam/api/v1/users
       + {"state":0,"user":{"id":2,"name":"test-user-01@mail.com","register_date":"2015-07-11","root_id":2}}
     - e.g.
-      + curl -i -X POST -d=test-user-01@mail.com&user[password]=123123" http://lys.webcam/api/v1/users
+      + curl -i -X POST -d "user[name]=test-user-01@mail.com&user[password]=123123" http://lys.webcam/api/v1/users
       + {"state":-3}
 ** sessions_controller
    
@@ -52,7 +52,7 @@
       + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb111" http://lys.webcam/api/v1/sessions
       + {"login_suc":true,"user":{"id":11,"name":"vincent6","register_date":"2015-07-07","root_id":null}}
     - e.g.
-      + curl -i -ame]=vincent6&user[password]=hlxdsbyb1112" http://lys.webcam/api/v1/sessions
+      + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb1112" http://lys.webcam/api/v1/sessions
       + {"login_suc":false}
         
 
