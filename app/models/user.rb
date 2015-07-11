@@ -24,29 +24,12 @@ class User < ActiveRecord::Base
 			if exuser != nil
 				return -3
 			end
-			user = User.create(name: name, password: psw, register_date: Time.now)
+			
+			file = Virfile.create(fa: 0, name: name, path: '', phys_id: -1, visible: true, update_time: Time.now)
+			user = User.create(name: name, password: psw, register_date: Time.now, root_id: file.id)
 			return user
 		end
 	end
-	#root: root directory file (virtual)
-	#this method is used to modify the root_id
-	#father of root file must id_0
-	def redirect(name = '', root = '')
-		user = User.find_by(name: name)
-		if user == nil
-			return false
-		else 
-			file = Virfile.find_by_path(root)
-			if file	== nil or file.fa != 0 or file.visible == false
-				return false
-			else
-				user.root_id = file.id
-				user.save
-				return true
-			end
-		end
-	end
-
 	def newpsw(name = '', psw = '')
 		if psw.length < 6
 			return false

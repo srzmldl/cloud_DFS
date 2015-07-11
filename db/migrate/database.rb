@@ -13,7 +13,8 @@ class Database < ActiveRecord::Migration
 		end
 		create_table :fragfiles do |f|
 			f.string :addr
-			f.integer :phys_id		
+			f.integer :phys_id
+			f.integer :index		
 		end
 		create_table :users do |u|
 			u.string :name

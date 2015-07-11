@@ -1,7 +1,8 @@
 class Virfile < ActiveRecord::Base
+    attr_readonly :id;
     class << self
-	def list(path = '')
-		fa = find_by_path(path)
+	def list(username = '', path = '')
+		fa = find_by_path(username, path)
 		if fa == nil
 			fa = 0
 		else 
@@ -16,10 +17,10 @@ class Virfile < ActiveRecord::Base
 		return a
 	end
     
-	def creat(path = '', name = 'New', physid = -1)
-		fa = find_by_path(path)
+	def creat(username = '', path = '', name = 'New', physid = -1)
+		fa = find_by_path(username, path)
 		if fa == nil
-			fa = 0	
+			return 0	
 		else 
 			fa = fa.id
 		end
@@ -41,8 +42,8 @@ class Virfile < ActiveRecord::Base
 		file.save
 		return file
 	end
-	def delete(id = -1)
-		file = Virfile.find_by(id: id)
+	def delete(username = '', path = '')
+		file = Virfile.find_by_path(username, path)
 		if file == nil		
 			return nil
 		else
@@ -51,8 +52,12 @@ class Virfile < ActiveRecord::Base
 			return file
 		end
 	end
-	def find_by_path(path = 'Home')
-		cur = 0;
+	def find_by_path(username = '', path = '')
+		file = Virfile.find_by(name: username, fa: 0)
+		if file == nil
+			return nil
+		end
+		cur = file.id
 		buf = ""
 		i = 0
 		while i < path.length
