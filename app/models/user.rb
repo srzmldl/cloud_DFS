@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 				return -3
 			end
 			
-			file = Virfile.create(fa: 0, name: name, path: '', phys_id: -1, visible: true, update_time: Time.now)
+			file = Virfile.creat('', '', name, -1)
 			user = User.create(name: name, password: psw, register_date: Time.now, root_id: file.id)
 			return user
 		end
