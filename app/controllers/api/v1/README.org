@@ -16,9 +16,9 @@
     - return {@user, :id, :name, :register_date, :root_id}.
       + attribute of @user :id, :name, :register_date, :root_id
     - e.g.
-      + curl -i http://localhost:3000/api/v1/users/6
+      + curl -i http://lys.webcam/api/v1/users/6
       + {"user":{"id":6,"name":"abcdefg","register_date":null,"root_id":null}}
- 
+   
 *** create(register)
     - register a new user
     - POST   /api/v1/users(.:format)
@@ -30,14 +30,15 @@
         + -3 user already exist.
         + 0 no error
       * attribute of @user: as same as those in show
+
+
     - e.g.
-      + curl -i -X POST -d "user[name]=vincent1&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/users
+      + curl -i -X POST -d=test-user-01@mail.com&user[password]=123123" http://lys.webcam/api/v1/users
+      + {"state":0,"user":{"id":2,"name":"test-user-01@mail.com","register_date":"2015-07-11","root_id":2}}
+    - e.g.
+      + curl -i -X POST -d=test-user-01@mail.com&user[password]=123123" http://lys.webcam/api/v1/users
       + {"state":-3}
-    - e.g.
-      + curl -i -X POSame]=vincent10&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/users
-      + {"state":0,"user":{"id":17,"name":"vincent10","register_date":"2015-07-09","root_id":null}}
-         
-** sessions_controller(login)
+** sessions_controller
    
 *** create(login)
     - login and get user information
@@ -48,15 +49,15 @@
       + @user = nil when login_suc == false
       + attribute of @user :id, :name, :register_date, :root_id
     - e.g.   
-      + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb111" http://localhost:3000/api/v1/sessions
+      + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb111" http://lys.webcam/api/v1/sessions
       + {"login_suc":true,"user":{"id":11,"name":"vincent6","register_date":"2015-07-07","root_id":null}}
     - e.g.
-      + curl -i -ame]=vincent6&user[password]=hlxdsbyb1112" http://localhost:3000/api/v1/sessions
+      + curl -i -ame]=vincent6&user[password]=hlxdsbyb1112" http://lys.webcam/api/v1/sessions
       + {"login_suc":false}
         
 
 ** virfiles_controller
-
+   
 *** index(list all the files in the directory)
   - list files and directory in :path of :user_name
   - GET    /api/v1//virfiles(.:format)
