@@ -20,7 +20,7 @@ class Virfile < ActiveRecord::Base
 	def creat(username = '', path = '', name = 'New', physid = -1)
 		fa = find_by_path(username, path)
 		if fa == nil
-			fa = 0	
+			return 0	
 		else 
 			fa = fa.id
 		end
@@ -53,7 +53,7 @@ class Virfile < ActiveRecord::Base
 		end
 	end
 	def find_by_path(username = '', path = '')
-		file = Virfile.find_by(name: name, fa: 0)
+		file = Virfile.find_by(name: username, fa: 0)
 		if file == nil
 			return nil
 		end
