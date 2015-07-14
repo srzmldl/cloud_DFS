@@ -12,7 +12,7 @@ class Virfile < ActiveRecord::Base
 		files = Virfile.where(fa: fa).order('name')
 		a = []
 		files.each do |f|
-			a.push(f)		
+			a.push(f)
 		end
 		return a
 	end
@@ -69,7 +69,7 @@ class Virfile < ActiveRecord::Base
 			i = i + 1
 			cur = Virfile.find_by(fa: cur, name: buf)
 			if cur == nil
-				return nil		
+				return nil
 			end
 			file = cur
 			cur = cur.id

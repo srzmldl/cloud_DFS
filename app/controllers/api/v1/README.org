@@ -60,18 +60,58 @@
    
 *** index(list all the files in the directory)
   - list files and directory in :path of :user_name
-  - GET    /api/v1//virfiles(.:format)
+  - GET    /api/v1/virfiles(.:format)
   - receive {abs_path}
-    + attribute :user_name, :path
-  - feedback {list, if_file}
-    + list is an array, its element is virfiles(:id, :name)
+    + attributes :user_name, :path
+    + path == "" for root directory for every user
+  - feedback {list}
+    + list is an array, its element is virfiles(:id, :name, :if_file)
     + if_file == 1 means it's a file, a directory otherwise.
   - e.g.
-  - 
+    + curl -s "http://lys.webcam/api/v1/virfiles" -X GET -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":""}}' 
+    + {"list":[{"id":2,"name":"first","if_file":1},{"id":3,"name":"first1","if_file":0}]} 
 *** create
-    - create :path/:name to :user_name
+    - POST   /api/v1/virfiles(.:format) 
+    - receive {abs_path, file_inf, frag_arr}
+      + file_inf includes name & frag_num
+      + abs_path includes user_name & path & if_file. We will create a new file or directory under "path" or "user_name"
+        * if_file == 1 means it's a file, otherwise a directory
+        * the root directory of any users is ""
+      
+    - e.g.
+      + curl -s "http://lys.webcam/api/v1/virfiles" -X POST -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":""}, "file_inf":{"name":"first", "frag_num":2, "if_file":1}, "frag_arr" : [{"addr":"www/baidu/com", "index":1}, {"addr":"www.google.com", "index":2}]}' 
+       
+      + {"suc":true}
+    - e.g.
+      + curl -s "http://localhost:3000/api/v1/virfiles" -X POST -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":""}, "file_inf":{"name":"first1", "frag_num":2, "if_file":0}, "frag_arr" : [{"addr":"www/baidu/com", "index":1}, {"addr":"www.google.com
+      + {"suc":true}
 *** show
     - show all the frag of :path
+    - GET /api/v1/virfiles/:id(.:format) 
+      + :id here remain for improvement.
+    - receive {abs_path}
+      + attributes  :user_name, :path
+    - feedback {if_file, frag_num, frag_list}
+      + if_file == 1 for file
+      + frag_num is the number of frag.
+      + frag_list is the list of {addr, index}
+    - e.g.
+      + curl -s "http://lys.webcam/api/v1/virfiles/2" -X GET -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first"}}' 
+      + {"if_file":1,"frag_num":2,"frag_list":[{"addr":"www.google.com","index":2},{"addr":"www/baidu/com","index":1}]}
+    - e.g.
+      + curl -s "http://lys.webcam/api/v1/virfiles/2" -X GET -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first1/"}}' 
+      + {"if_file":0,"frag_num":0,"frag_list":[]}
+
 *** destroy
     - delete :path of :user_name
-    
+    - DELETE /api/v1/virfiles/:id(.:format)
+      + :id for improvement in the future.
+    - receive {abs_path}
+      + attribute :user_name, :path
+    - feedback {suc}
+    - e.g.
+      + curl -s "http://lys.webcam/api/v1/virfiles/2" -X DELETE -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first"}}' 
+      + {"suc":true}
+    - e.g.
+      +   + curl -s "http://lys.webcam/api/v1/virfiles/2" -X DELETE -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first1/"}}' 
+      + {"suc":true}
