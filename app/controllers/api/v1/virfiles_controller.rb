@@ -28,7 +28,7 @@ class Api::V1::VirfilesController < ApplicationController
    # debugger
     @if_file = 0
     @frag_num = 0
-    debugger
+    #debugger
     if file.phys_id >= 0
       @frag_list = Fragfile.find_all(file.phys_id)
       @if_file = 1

@@ -83,7 +83,7 @@
        
       + {"suc":true}
     - e.g.
-      + curl -s "http://localhost:3000/api/v1/virfiles" -X POST -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":""}, "file_inf":{"name":"first1", "frag_num":2, "if_file":0}, "frag_arr" : [{"addr":"www/baidu/com", "index":1}, {"addr":"www.google.com
+      + curl -s "http://lys.webcam/api/v1/virfiles" -X POST -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":""}, "file_inf":{"name":"first1/", "frag_num":0, "if_file":0}, "frag_arr" : [{"addr":"www/baidu/com", "index":1}, {"addr":"www.google.com", "index":2}]}' 
       + {"suc":true}
 *** show
     - show all the frag of :path
@@ -113,5 +113,5 @@
       + curl -s "http://lys.webcam/api/v1/virfiles/2" -X DELETE -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first"}}' 
       + {"suc":true}
     - e.g.
-      +   + curl -s "http://lys.webcam/api/v1/virfiles/2" -X DELETE -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first1/"}}' 
+      +  curl -s "http://lys.webcam/api/v1/virfiles/2" -X DELETE -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first1/"}}' 
       + {"suc":true}
