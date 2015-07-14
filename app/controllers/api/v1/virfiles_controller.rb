@@ -11,6 +11,7 @@ class Api::V1::VirfilesController < ApplicationController
     phys_id = -1
     if (create_params[:if_file])
       phys_file = Physfile.creat(create_params[:frag_num])
+      phys_id = phys_file.id;
       Physfile.modify(phys_file.id, create_params[:frag_num])
       frag_arr_params.each do |p|
         #  debugger
