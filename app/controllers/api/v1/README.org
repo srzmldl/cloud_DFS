@@ -115,3 +115,33 @@
     - e.g.
       +  curl -s "http://lys.webcam/api/v1/virfiles/2" -X DELETE -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first1/"}}' 
       + {"suc":true}
+
+* Security
+
+** XSS(Cross-Site Scripting)
+   - It's the most common hack way.
+   - Fortunately, after rails 3, all the stuffs in View are "escape" by default.
+** TODO CSRF(Cross-site request forgery)
+   - All the reading or require operation only use GET method.
+   - Security token for POST, DELETE and etc.
+     + add "protect_from_forgery with: :exception" in app/controllers/application_controller.rb
+** SQL injection
+   - It's one of the most horribe attack.
+   - We have to escape all the statement that passes parameters to function which controls SQL.
+     + For /Where/ method in /ActiveRecord/ , never use string parameters. Because /Hash/ and /Array/ can deal with this hack automatically.
+       * e.g. /Project.where( { :name => params[:name] } )/
+     + No automatical escape for the method below:
+       * find_by_sql
+       * execute
+       * where with string parameters
+       * group
+       * order
+** Mass assignment
+   - It's a specific security problem caused by the convenient of rails
+   - We use /Strong Parameters/ to make sure that it's safe enough to /Mass assignment/ operation.
+
+** Filter sensitive information
+   - e.g. for password
+     + /Rails.application.config.filter_parameters += [:password]/ in /config/initializers/filter_parameter_logging.rb/
+     + Processing UsersController#create (for 127.0.0.1 at 2009-01-02 11:02:33) [POST]
+   Parameters: {"user"=>{"name"=>"susan", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]"}, "commit"=>"Register", "action"=>"create", "authenticity_token"=>"9efc03bcc37191d8a6dc3676e2e7890ecdfda0b5", "controller"=>"users"}
