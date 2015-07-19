@@ -6,6 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.date :register_date
       t.integer :root_id
       t.timestamps null: false
+      t.string :authen_token
     end
   end
 end

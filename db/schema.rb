@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20150701073750) do
   create_table "fragfiles", force: :cascade do |t|
     t.string  "addr"
     t.integer "phys_id"
+    t.integer "index"
   end
 
   create_table "physfiles", force: :cascade do |t|
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 20150701073750) do
     t.integer  "root_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "authen_token"
   end
 
   create_table "virfiles", force: :cascade do |t|
