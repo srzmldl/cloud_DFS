@@ -15,20 +15,21 @@ class User < ActiveRecord::Base
 	# |psw|  < 6 return -2
 	# user exist return -3
 	def register(name = '', psw = '')
-		if name.length < 3
-			return -1
-		elsif	psw.length < 6
-			return -2
-		else 
-			exuser = User.find_by(name: name)
-			if exuser != nil
-				return -3
-			end
-			
-			file = Virfile.create(fa: 0, name: name, path: '', phys_id: -1, visible: true, update_time: Time.now)
-			user = User.create(name: name, password: psw, register_date: Time.now, root_id: file.id)
-			return user
-		end
+      if name.length < 3
+        return -1
+      elsif	psw.length < 6
+        return -2
+      else 
+        exuser = User.find_by(name: name)
+        if exuser != nil
+          return -3
+        end
+        
+        file = Virfile.create(fa: 0, name: name, path: '', phys_id: -1, visible: true, update_time: Time.now)
+        user = User.create(name: name, password: psw, register_date: Time.now, root_id: file.id, wrong_token_time: 0)
+        user.generate_token
+        return user
+      end
 	end
 	def newpsw(name = '', old_psw = '', new_psw = '')
 		if new_psw.length < 6
@@ -46,6 +47,25 @@ class User < ActiveRecord::Base
     end
 
 	# use a specific user-object to call the api. (***.generate_token)
+
+
+	def auth_token(client_token = '')
+		if self.authen_token == client_token
+			return true
+		else
+
+          self.wrong_token_time += 1
+          #debugger
+          self.save
+          if self.wrong_token_time >= 3
+            self.generate_token
+          end
+          
+          return false
+		end	
+	end
+
+
 	def generate_token ()
 		while(1)
 			self.authen_token = SecureRandom.base64(64)
@@ -54,13 +74,4 @@ class User < ActiveRecord::Base
 		self.save
 		return authen_token
 	end
-
-	def auth_token(client_token = '')
-		if self.authen_token == client_token
-			return true
-		else
-			return false
-		end	
-	end
-
 end

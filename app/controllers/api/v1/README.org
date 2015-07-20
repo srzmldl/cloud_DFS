@@ -1,5 +1,6 @@
 * Files
 | Name                   | Description                            |
+|------------------------+----------------------------------------|
 | README.org             | this file                              |
 | base_controller.rb     | base controller                        |
 | sessions_controller.rb | log in                                 |
@@ -9,12 +10,15 @@
 
 * Description
 ** users_controller
-   
+*** tips
+    - The token have to be changed after 3 times error
 *** show
-    - get the information of user by id
-    - GET    /api/v1/users/:id(.:format)
-    - return {@user, :id, :name, :register_date, :root_id}.
-      + attribute of @user :id, :name, :register_date, :root_id
+    - get the profile by token and user_name after verify.
+    - POST   /api/v1/users/profile(.:format)
+    - return {@user}.
+      + attribute of @user /:name, :register_date/
+    - 400 for error name
+    - 403 for error token
     - e.g.
       + curl -i http://lys.webcam/api/v1/users/6
       + {"user":{"id":6,"name":"abcdefg","register_date":null,"root_id":null}}
@@ -45,12 +49,12 @@
     - POST   /api/v1/sessions(.:format)
     - Receive {@user, :name, password}
     - feedback {login_suc, @user}
-      + login_suc = true if success.
-      + @user = nil when login_suc == false
-      + attribute of @user :id, :name, :register_date, :root_id
+      + /login_suc = true/ if success.
+      + /@user = nil/ when /login_suc == false/
+      + attribute of @user :name, :register_date, :authen_token
+    - 401 error if login fail
     - e.g.   
-      + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb111" http://lys.webcam/api/v1/sessions
-      + {"login_suc":true,"user":{"id":11,"name":"vincent6","register_date":"2015-07-07","root_id":null}}
+      + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb111" http://lys.webcam/api/v1/sessions {"login_suc":true,"user":{"id":11,"name":"vincent6","register_date":"2015-07-07","root_id":null}}
     - e.g.
       + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb1112" http://lys.webcam/api/v1/sessions
       + {"login_suc":false}

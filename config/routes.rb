@@ -10,9 +10,12 @@ Rails.application.routes.draw do
   #   get 'products/:id' => 'catalog#view'
   namespace :api do
     namespace :v1 do
-      resources :users, only: [:index, :create, :show, :update, :destroy]
+      resources :users, only: [:create]
+      post '/users/profile',  to: 'users#show'
       resources :sessions, only: [:create]
-      resources :virfiles, only: [:index, :create, :show, :update, :destroy]
+      resources :virfiles, only: [:create, :destroy]
+      post '/virfiles/index', to: 'virfiles#index'
+      post '/virfiles/show', to: 'virfiles#show'
     end
   end
   # Example of named route that can be invoked with purchase_url(id: product.id)

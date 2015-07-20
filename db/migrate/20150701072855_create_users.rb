@@ -7,6 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :root_id
       t.timestamps null: false
       t.string :authen_token
+      t.integer :wrong_token_time
     end
   end
 end

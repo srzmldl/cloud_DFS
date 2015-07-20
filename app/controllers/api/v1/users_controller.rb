@@ -3,7 +3,13 @@ class Api::V1::UsersController < ApplicationController
   skip_before_filter  :verify_authenticity_token
   #return id, name, register_date, root_id
   def show
-    @user = User.find(params[:id])
+    #debugger
+    @user = User.find_by(name: show_params[:name])
+    if @user == nil
+      return api_error(status: 400)
+    elsif !@user.auth_token(show_params[:authen_token])
+      return api_error(status: 403)
+    end
   end
 
   #return @state and @user(format like show)
@@ -24,7 +30,11 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def create_params
-    params.require(:user).permit(:name, :password)
+    params.require(:register_user).permit(:name, :password)
+  end
+
+  def show_params
+    params.require(:show_user).permit(:name, :authen_token)
   end
   
 end

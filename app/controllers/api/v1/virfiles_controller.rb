@@ -1,7 +1,8 @@
 class Api::V1::VirfilesController < ApplicationController
   
   skip_before_filter  :verify_authenticity_token
-
+  before_action :require_verify
+  
   #list, return all the file in the directory
   def index
     @index_list = Virfile.list(path_params[:user_name], path_params[:path]);
@@ -47,6 +48,14 @@ class Api::V1::VirfilesController < ApplicationController
   end
   
   private
+
+  def require_verify
+    user_to_verify = User.find_by(name: verify_info[:user_name])
+    if user_to_verify.auth_token(verify_info[:authen_token])
+      return api_error(status: 403)
+    end
+  end
+  
   def path_params
     params.require(:abs_path).permit(:user_name, :path)
   end
@@ -57,5 +66,9 @@ class Api::V1::VirfilesController < ApplicationController
 
   def frag_arr_params
     params.require(:frag_arr)#.permit(:addr, :index)
+  end
+
+  def token_params
+    params.require(:verify_info).permit(:user_name, :authen_token)
   end
 end

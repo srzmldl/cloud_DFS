@@ -28,9 +28,10 @@ ActiveRecord::Schema.define(version: 20150701073750) do
     t.string   "password"
     t.date     "register_date"
     t.integer  "root_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "authen_token"
+    t.integer  "wrong_token_time"
   end
 
   create_table "virfiles", force: :cascade do |t|
