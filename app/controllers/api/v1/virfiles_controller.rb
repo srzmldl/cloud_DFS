@@ -62,11 +62,11 @@ class Api::V1::VirfilesController < ApplicationController
   end
 
   def create_params
-    params.require(:file_inf).permit(:frag_num, :name, :if_file)
+    params[:file_inf]
   end
 
   def frag_arr_params
-    params.permit(:frag_arr)#.permit(:addr, :index)
+    params[:frag_arr] #.permit(:addr, :index)
   end
 
   def token_params
