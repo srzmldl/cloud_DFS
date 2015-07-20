@@ -10,7 +10,8 @@ class Api::V1::VirfilesController < ApplicationController
 
   def create
     phys_id = -1
-    if (create_params[:if_file])
+    #debugger
+    if create_params[:if_file]
       phys_file = Physfile.creat(create_params[:frag_num])
       phys_id = phys_file.id;
       Physfile.modify(phys_file.id, create_params[:frag_num])
@@ -28,12 +29,12 @@ class Api::V1::VirfilesController < ApplicationController
   #  debugger
     file = Virfile.find_by_path(path_params[:user_name], path_params[:path])
    # debugger
-    @if_file = 0
+    @if_file = false
     @frag_num = 0
     #debugger
     if file.phys_id >= 0
       @frag_list = Fragfile.find_all(file.phys_id)
-      @if_file = 1
+      @if_file = true
      # debugger
       phys_file = Physfile.find_id(file.phys_id)
       @frag_num = phys_file.frag_num
@@ -50,8 +51,8 @@ class Api::V1::VirfilesController < ApplicationController
   private
 
   def require_verify
-    user_to_verify = User.find_by(name: verify_info[:user_name])
-    if user_to_verify.auth_token(verify_info[:authen_token])
+    user_to_verify = User.find_by(name: path_params[:user_name])
+    if !user_to_verify.auth_token(token_params)
       return api_error(status: 403)
     end
   end
@@ -65,10 +66,10 @@ class Api::V1::VirfilesController < ApplicationController
   end
 
   def frag_arr_params
-    params.require(:frag_arr)#.permit(:addr, :index)
+    params.permit(:frag_arr)#.permit(:addr, :index)
   end
 
   def token_params
-    params.require(:verify_info).permit(:user_name, :authen_token)
+    params.require(:authen_token)
   end
 end

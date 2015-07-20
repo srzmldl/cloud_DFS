@@ -13,9 +13,10 @@ Rails.application.routes.draw do
       resources :users, only: [:create]
       post '/users/profile',  to: 'users#show'
       resources :sessions, only: [:create]
-      resources :virfiles, only: [:create, :destroy]
+      resources :virfiles, only: [:create]
       post '/virfiles/index', to: 'virfiles#index'
       post '/virfiles/show', to: 'virfiles#show'
+      delete '/virfiles/delete', to: 'virfiles#destroy'
     end
   end
   # Example of named route that can be invoked with purchase_url(id: product.id)

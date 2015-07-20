@@ -9,20 +9,24 @@
 
 
 * Description
-** users_controller
-*** tips
+** tips
     - The token have to be changed after 3 times error
+    - Please change all the "http://localhost:3000" into "http://lys.webcam"
+    - path == "" for root directory for every user
+    - Every method to operate the virfile have to be verified at the very beggining. We have to receive {verify_info, :user_name, :authen_token}. 403 error for wrong authen_token
+** users_controller
 *** show
-    - get the profile by token and user_name after verify.
+    - show the profile by token and user_name after verify.
     - POST   /api/v1/users/profile(.:format)
     - return {@user}.
       + attribute of @user /:name, :register_date/
-    - 400 for error name
-    - 403 for error token
-    - e.g.
-      + curl -i http://lys.webcam/api/v1/users/6
-      + {"user":{"id":6,"name":"abcdefg","register_date":null,"root_id":null}}
-        
+    - 400 for error name & 403 for error token
+    - 400 or 403 e.g.
+      + curl -s "http://localhost:3000/api/v1/users/profile" -X POST -H 'Content-Type: application/json' -d '{"show_user":{"name":"test00", "authen_token":"50z7tPyBiKomBRd5i5iTdMG4QKZlZ3cT0qgVQWRoq49bwj52nW4dvhd0zJ4xbVT587Qx6mGOAUiBbzA8RNh67w="}}' 
+      + 403 error
+    - successful e.g.
+      + curl -s "http://localhost:3000/api/v1/users/profile" -X POST -H 'Content-Type: application/json' -d '{"show_user":{"name":"test00", "authen_token":"50z7tPyBiKomBRd5i5iTdMG4QKZlZ3cT0qgVQWRoq49bwj52nW4dvhd0zJ4xbVT587Qx6mGOAUiBbzA8RNh67w=="}}' 
+      + {"user":{"name":"test00","register_date":"2015-07-20"}}
 *** create(register)
     - register a new user
     - POST   /api/v1/users(.:format)
@@ -35,17 +39,22 @@
         + 0 no error
       * attribute of @user: as same as those in show
 
-
-    - e.g.
-      + curl -i -X POST -d "user[name]=test-user-01@mail.com&user[password]=123123" http://lys.webcam/api/v1/users
-      + {"state":0,"user":{"id":2,"name":"test-user-01@mail.com","register_date":"2015-07-11","root_id":2}}
-    - e.g.
-      + curl -i -X POST -d "user[name]=test-user-01@mail.com&user[password]=123123" http://lys.webcam/api/v1/users
+    - short password e.g.
+      + curl -s "http://localhost:3000/api/v1/users" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test0", "password":"12"}}' 
+      + {"state":-2}
+    - short user name e.g.
+      + curl -s "http://localhost:3000/api/v1/users" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"t", "password":"12345678"}}' 
+      + {"state":-1}
+    - successful e.g. 
+      + curl -s "http://localhost:3000/api/v1/users" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test00", "password":"12345678"}}' 
+      + {"state":0,"user":{"name":"test00","register_date":"2015-07-20","authen_token":"50z7tPyBiKomBRd5i5iTdMG4QKZlZ3cT0qgVQWRoq49bwj52nW4dvhd0zJ4xbVT587Qx6mGOAUiBbzA8RNh67w=="}}    
+    - duplicate name e.g.
+      +  curl -s "http://localhost:3000/api/v1/users" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test00", "password":"12345678"}}' 
       + {"state":-3}
 ** sessions_controller
    
 *** create(login)
-    - login and get user information
+    - login and get user information & token
     - POST   /api/v1/sessions(.:format)
     - Receive {@user, :name, password}
     - feedback {login_suc, @user}
@@ -53,79 +62,81 @@
       + /@user = nil/ when /login_suc == false/
       + attribute of @user :name, :register_date, :authen_token
     - 401 error if login fail
-    - e.g.   
-      + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb111" http://lys.webcam/api/v1/sessions {"login_suc":true,"user":{"id":11,"name":"vincent6","register_date":"2015-07-07","root_id":null}}
-    - e.g.
-      + curl -i -X POST -d "user[name]=vincent6&user[password]=hlxdsbyb1112" http://lys.webcam/api/v1/sessions
-      + {"login_suc":false}
+    - successful e.g.   
+      + curl -s "http://localhost:3000/api/v1/sessions" -X POST -H 'Content-Type: application/json' -d '{"user":{"name":"test00", "password":"12345678"}}' 
+      + {"login_suc":true,"user":{"name":"test00","register_date":"2015-07-20","authen_token":"50z7tPyBiKomBRd5i5iTdMG4QKZlZ3cT0qgVQWRoq49bwj52nW4dvhd0zJ4xbVT587Qx6mGOAUiBbzA8RNh67w=="}}
+    - fail e.g.
+      +  curl -s "http://localhost:3000/api/v1/sessions" -X POST -H 'Content-Type: application/json' -d '{"user":{"name":"test00", "password":"123456789"}}' 
+      + 401 error
         
 
 ** virfiles_controller
    
 *** index(list all the files in the directory)
   - list files and directory in :path of :user_name
-  - GET    /api/v1/virfiles(.:format)
-  - receive {abs_path}
+  - POST   /api/v1/virfiles/index(.:format)
+  - receive {abs_path, verify_info}
     + attributes :user_name, :path
-    + path == "" for root directory for every user
+    + learn more about verify_info in tips
   - feedback {list}
     + list is an array, its element is virfiles(:id, :name, :if_file)
-    + if_file == 1 means it's a file, a directory otherwise.
+    + /if_file == true/ means that it's a file, a directory otherwise.
   - e.g.
-    + curl -s "http://lys.webcam/api/v1/virfiles" -X GET -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":""}}' 
-    + {"list":[{"id":2,"name":"first","if_file":1},{"id":3,"name":"first1","if_file":0}]} 
+    + curl -s "http://localhost:3000/api/v1/virfiles/index" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "authen_token":"50z7tPyBiKomBRd5i5iTdMG4QKZlZ3cT0qgVQWRoq49bwj52nW4dvhd0zJ4xbVT587Qx6mGOAUiBbzA8RNh67w=="}' 
+    + {"list":[{"name":"first","if_file":true},{"name":"firstd","if_file":true},{"name":"firstd1","if_file":false}]}
+
+  - e.g.
+    + curl -s "http://localhost:3000/api/v1/virfiles/index" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd1/"}, "authen_token":"Je6aWTPs/PoLRJ8yUm1ve1QKQ5d8E0KACdALlRkt7PZ6WX7ZKqUDIUb/F/ZJPqeYFpPO3dMMSIDuO6/C1ZOmWA=="}' 
+    + {"list":[{"name":"secondfile","if_file":true}]}
 *** create
     - POST   /api/v1/virfiles(.:format) 
-    - receive {abs_path, file_inf, frag_arr}
+    - receive {abs_path, file_inf, frag_arr, verify_info}
       + file_inf includes name & frag_num
       + abs_path includes user_name & path & if_file. We will create a new file or directory under "path" or "user_name"
         * if_file == 1 means it's a file, otherwise a directory
-        * the root directory of any users is ""
-      
-    - e.g.
-      + curl -s "http://lys.webcam/api/v1/virfiles" -X POST -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":""}, "file_inf":{"name":"first", "frag_num":2, "if_file":1}, "frag_arr" : [{"addr":"www/baidu/com", "index":1}, {"addr":"www.google.com", "index":2}]}' 
-       
-      + {"suc":true}
-    - e.g.
-      + curl -s "http://lys.webcam/api/v1/virfiles" -X POST -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":""}, "file_inf":{"name":"first1/", "frag_num":0, "if_file":0}, "frag_arr" : [{"addr":"www/baidu/com", "index":1}, {"addr":"www.google.com", "index":2}]}' 
+    - feedback {state}
+    - fail e.g.
+      + curl -s "http://localhost:3000/api/v1/virfiles" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "file_inf":{"name":"first", "frag_num":2, "if_file":true}, "frag_arr" : [{"addr":"www/baidu/com", "index":1}, {"addr":"www.google.com", "index":2}], "authen_token" : "123"}' 
+      + 403 error
+    - create a file successful
+      + curl -s "http://localhost:3000/api/v1/virfiles" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd1/"}, "file_inf":{"name":"secondfile", "frag_num":2, "if_file": true}, "frag_arr" : [{"addr":"www/baidu/com", "index":1}, {"addr":"www.google.com", "index":2}], "authen_token" : "50z7tPyBiKomBRd5i5iTdMG4QKZlZ3cT0qgVQWRoq49bwj52nW4dvhd0zJ4xbVT587Qx6mGOAUiBbzA8RNh67w=="}' 
+     
+    - create a directory successful
+      + curl -s "http://localhost:3000/api/v1/virfiles" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "file_inf":{"name":"firstd1", "frag_num":0, "if_file":false}, "authen_token":"50z7tPyBiKomBRd5i5iTdMG4QKZlZ3cT0qgVQWRoq49bwj52nW4dvhd0zJ4xbVT587Qx6mGOAUiBbzA8RNh67w=="}' 
       + {"suc":true}
 *** show
     - show all the frag of :path
-    - GET /api/v1/virfiles/:id(.:format) 
-      + :id here remain for improvement.
+    - POST   /api/v1/virfiles/show(.:format) 
     - receive {abs_path}
       + attributes  :user_name, :path
     - feedback {if_file, frag_num, frag_list}
-      + if_file == 1 for file
+      + /if_file == true/ for file
       + frag_num is the number of frag.
       + frag_list is the list of {addr, index}
     - e.g.
-      + curl -s "http://lys.webcam/api/v1/virfiles/2" -X GET -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first"}}' 
-      + {"if_file":1,"frag_num":2,"frag_list":[{"addr":"www.google.com","index":2},{"addr":"www/baidu/com","index":1}]}
+      + curl -s "http://localhost:3000/api/v1/virfiles/show" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd1"}, "authen_token":"Je6aWTPs/PoLRJ8yUm1ve1QKQ5d8E0KACdALlRkt7PZ6WX7ZKqUDIUb/F/ZJPqeYFpPO3dMMSIDuO6/C1ZOmWA=="}' 
+      + {"if_file":false,"frag_num":0}
     - e.g.
-      + curl -s "http://lys.webcam/api/v1/virfiles/2" -X GET -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first1/"}}' 
-      + {"if_file":0,"frag_num":0,"frag_list":[]}
+      + curl -s "http://localhost:3000/api/v1/virfiles/show" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"first"}, "authen_token":"Je6aWTPs/PoLRJ8yUm1ve1QKQ5d8E0KACdALlRkt7PZ6WX7ZKqUDIUb/F/ZJPqeYFpPO3dMMSIDuO6/C1ZOmWA=="}' 
+      + {"if_file":true,"frag_num":2,"frag_list":[{"addr":"www.google.com","index":2},{"addr":"www/baidu/com","index":1}]}
 
 *** destroy
     - delete :path of :user_name
-    - DELETE /api/v1/virfiles/:id(.:format)
-      + :id for improvement in the future.
+    - DELETE /api/v1/virfiles/delete(.:format) 
     - receive {abs_path}
       + attribute :user_name, :path
     - feedback {suc}
     - e.g.
-      + curl -s "http://lys.webcam/api/v1/virfiles/2" -X DELETE -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first"}}' 
+      + curl -s "http://localhost:3000/api/v1/virfiles/delete" -X DELETE -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd"}, "authen_token":"Je6aWTPs/PoLRJ8yUm1ve1QKQ5d8E0KACdALlRkt7PZ6WX7ZKqUDIUb/F/ZJPqeYFpPO3dMMSIDuO6/C1ZOmWA=="}'  
       + {"suc":true}
-    - e.g.
-      +  curl -s "http://lys.webcam/api/v1/virfiles/2" -X DELETE -H 'Content-Type: application/json' --data '{"abs_path":{"user_name":"test-user-00@mail.com", "path":"first1/"}}' 
-      + {"suc":true}
+
 
 * Security
 
 ** XSS(Cross-Site Scripting)
    - It's the most common hack way.
    - Fortunately, after rails 3, all the stuffs in View are "escape" by default.
-** TODO CSRF(Cross-site request forgery)
+** CSRF(Cross-site request forgery)
    - All the reading or require operation only use GET method.
    - Security token for POST, DELETE and etc.
      + add "protect_from_forgery with: :exception" in app/controllers/application_controller.rb
