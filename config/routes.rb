@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       post '/virfiles/index', to: 'virfiles#index'
       post '/virfiles/show', to: 'virfiles#show'
       delete '/virfiles/delete', to: 'virfiles#destroy'
+      get '/hello', to: 'hello#show'
     end
   end
   # Example of named route that can be invoked with purchase_url(id: product.id)
