@@ -1,8 +1,8 @@
 class Physfile < ActiveRecord::Base
     attr_readonly :id;
     class << self
-	def creat(num = 0)
-		file = Physfile.create(frag_num: num)
+	def creat(num = 0, file_sha1 = '', file_md5 = '')
+		file = Physfile.create(frag_num: num, sha1: file_sha1, md5: file_md5)
 		return file
 	end	
 

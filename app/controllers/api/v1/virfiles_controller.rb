@@ -12,12 +12,12 @@ class Api::V1::VirfilesController < ApplicationController
     phys_id = -1
     #debugger
     if create_params[:if_file]
-      phys_file = Physfile.creat(create_params[:frag_num])
+      phys_file = Physfile.creat(create_params[:frag_num], create_params[:file_sha1], create_params[:file_md5])
       phys_id = phys_file.id;
       Physfile.modify(phys_file.id, create_params[:frag_num])
       frag_arr_params.each do |p|
         #  debugger
-        Fragfile.creat(phys_file.id, p[:addr], p[:index])
+        Fragfile.creat(phys_file.id, p[:addr], p[:index], p[:md5], p[:sha1], p[:server_name])
       end
     end
     #debugger
@@ -38,6 +38,8 @@ class Api::V1::VirfilesController < ApplicationController
      # debugger
       phys_file = Physfile.find_id(file.phys_id)
       @frag_num = phys_file.frag_num
+      @file_sha1 = phys_file.sha1
+      @file_md5 = phys_file.md5
     end
   end
 

@@ -15,12 +15,17 @@ ActiveRecord::Schema.define(version: 20150701073750) do
 
   create_table "fragfiles", force: :cascade do |t|
     t.string  "addr"
+    t.string  "md5"
+    t.string  "sha1"
+    t.string  "server_name"
     t.integer "phys_id"
     t.integer "index"
   end
 
   create_table "physfiles", force: :cascade do |t|
     t.integer "frag_num"
+    t.string  "sha1"
+    t.string  "md5"
   end
 
   create_table "users", force: :cascade do |t|
