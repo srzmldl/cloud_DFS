@@ -11,7 +11,7 @@
 * Description
 ** tips
     - The token have to be changed after 3 times error
-    - Please change all the "http://localhost:3000" into "http://lys.webcam"
+    - Please change all the "http://localhost:3000" into "http://222.195.92.170:3000" (It could be changed frequently)
     - path == "" for root directory for every user
     - Every method to operate the virfile have to be verified at the very beggining. We have to receive {verify_info, :user_name, :authen_token}. 403 error for wrong authen_token
 ** users_controller
