@@ -1,6 +1,6 @@
 * Introduction
   This is our final homework of couse "Operating System Concept(H)". We are going to complete a Distributed Filesystem based on commercial cloud storage. This is the server maintenance part.
-  - [[https://git.ustclug.org/srzmldl/Cloud_DFS/tree/master/app/controllers/api/v1][example to use api & README of controller]]
+  - [[https://git.ustclug.org/srzmldl/Cloud_DFS/tree/master/app/controllers/api/v1][API document & README of controller]]
   - [[https://git.ustclug.org/srzmldl/Cloud_DFS/tree/master/app/models][README of models]]
 * Member
   - Kai Xing(Professor)
