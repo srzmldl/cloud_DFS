@@ -2,10 +2,10 @@
 | Name                   | Description                            |
 |------------------------+----------------------------------------|
 | README.org             | this file                              |
-| base\_controller.rb    | base controller                        |
-| sessions\_controller.rb | log in                                 |
-| users\_controller.rb   | user create, show                      |
-| virfiles\_controller.rb | The file system that user could access |
+| base_controller.rb     | base controller                        |
+| sessions_controller.rb | log in                                 |
+| users_controller.rb    | user create, show                      |
+| virfiles_controller.rb | The file system that user could access |
 
 
 * API description

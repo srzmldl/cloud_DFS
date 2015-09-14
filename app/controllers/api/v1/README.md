@@ -72,25 +72,25 @@
 
 
 <tr>
-<td class="left">base\\_controller.rb</td>
+<td class="left">base\_controller.rb</td>
 <td class="left">base controller</td>
 </tr>
 
 
 <tr>
-<td class="left">sessions\\_controller.rb</td>
+<td class="left">sessions\_controller.rb</td>
 <td class="left">log in</td>
 </tr>
 
 
 <tr>
-<td class="left">users\\_controller.rb</td>
+<td class="left">users\_controller.rb</td>
 <td class="left">user create, show</td>
 </tr>
 
 
 <tr>
-<td class="left">virfiles\\_controller.rb</td>
+<td class="left">virfiles\_controller.rb</td>
 <td class="left">The file system that user could access</td>
 </tr>
 </tbody>
