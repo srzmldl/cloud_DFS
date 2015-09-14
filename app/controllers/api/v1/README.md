@@ -179,7 +179,7 @@
 ## tips<a id="sec-2-2" name="sec-2-2"></a>
 
 -   The token would  be changed after 3 times error
--   Please change all the "<http://localhost:3000>" into "<http://222.195.92.170:3000>" (It could be changed frequently)
+-   Please change all the "http://localhost:3000" into "http://222.195.92.170:3000" (It could be changed frequently)
 -   The root directory for every user is nil string ("")
 -   Every method to operate the virfile have to be verified at the very beggining. We have to receive {verify_info, :user_name, :authen_token}. 403 error for wrong authen_token
 
@@ -201,10 +201,10 @@
 3.  e.g.
 
     -   error e.g.
-        -   curl -s "<http://localhost:3000/api/v1/users/profile>" -X POST -H 'Content-Type: application/json' -d '{"show_user":{"name":"test00", "authen_token":"token"}}'
+        -   curl -s "http://localhost:3000/api/v1/users/profile" -X POST -H 'Content-Type: application/json' -d '{"show_user":{"name":"test00", "authen_token":"token"}}'
         -   403 error
     -   successful e.g.
-        -   curl -s "<http://localhost:3000/api/v1/users/profile>" -X POST -H 'Content-Type: application/json' -d '{"show_user":{"name":"test00", "authen_token":"token"}}'
+        -   curl -s "http://localhost:3000/api/v1/users/profile" -X POST -H 'Content-Type: application/json' -d '{"show_user":{"name":"test00", "authen_token":"token"}}'
         -   {"user":{"name":"test00","register_date":"2015-07-20"}}
 
 ### <a id="createUser" name="createUser"></a> create(register)<a id="sec-2-3-2" name="sec-2-3-2"></a>
@@ -227,16 +227,16 @@
 3.  e.g.
 
     -   short password e.g.
-        -   curl -s "<http://localhost:3000/api/v1/users>" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test0", "password":"12"}}'
+        -   curl -s "http://localhost:3000/api/v1/users" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test0", "password":"12"}}'
         -   {"state":-2}
     -   short user name e.g.
-        -   curl -s "<http://localhost:3000/api/v1/users>" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"t", "password":"12345678"}}'
+        -   curl -s "http://localhost:3000/api/v1/users" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"t", "password":"12345678"}}'
         -   {"state":-1}
     -   successful e.g. 
-        -   curl -s "<http://localhost:3000/api/v1/users>" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test00", "password":"12345678"}}'
+        -   curl -s "http://localhost:3000/api/v1/users" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test00", "password":"12345678"}}'
         -   {"state":0,"user":{"name":"test00","register_date":"2015-07-20","authen_token":"135"}}
     -   duplicate name e.g.
-        -   curl -s "<http://localhost:3000/api/v1/users>" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test00", "password":"12345678"}}'
+        -   curl -s "http://localhost:3000/api/v1/users" -X POST -H 'Content-Type: application/json' -d '{"register_user":{"name":"test00", "password":"12345678"}}'
         -   {"state":-3}
 
 ## sessions_controller<a id="sec-2-4" name="sec-2-4"></a>
@@ -259,10 +259,10 @@
 3.  e.g.
 
     -   successful e.g.   
-        -   curl -s "<http://localhost:3000/api/v1/sessions>" -X POST -H 'Content-Type: application/json' -d '{"user":{"name":"test00", "password":"12345678"}}'
+        -   curl -s "http://localhost:3000/api/v1/sessions" -X POST -H 'Content-Type: application/json' -d '{"user":{"name":"test00", "password":"12345678"}}'
         -   {"login_suc":true,"user":{"name":"test00","register_date":"2015-07-20","authen_token":"abc=="}}
     -   fail e.g.
-        -   curl -s "<http://localhost:3000/api/v1/sessions>" -X POST -H 'Content-Type: application/json' -d '{"user":{"name":"test00", "password":"123456789"}}'
+        -   curl -s "http://localhost:3000/api/v1/sessions" -X POST -H 'Content-Type: application/json' -d '{"user":{"name":"test00", "password":"123456789"}}'
         -   401 error
 
 ## virfiles_controller<a id="sec-2-5" name="sec-2-5"></a>
@@ -284,11 +284,11 @@
 3.  e.g.
 
     -   root directory
-        -   curl -s "<http://localhost:3000/api/v1/virfiles/index>" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "authen_token":"h67w=="}'
+        -   curl -s "http://localhost:3000/api/v1/virfiles/index" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "authen_token":"h67w=="}'
         -   {"list":[{"name":"first","if_file":true},{"name":"firstd","if_file":true},{"name":"firstd1","if_file":false}]}
     
     -   normal directory
-        -   curl -s "<http://localhost:3000/api/v1/virfiles/index>" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd1/"}, "authen_token":"OmWA=="}'
+        -   curl -s "http://localhost:3000/api/v1/virfiles/index" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd1/"}, "authen_token":"OmWA=="}'
         -   {"list":[{"name":"secondfile","if_file":true}]}
 
 ### <a id="listFile" name="listFile"></a> create<a id="sec-2-5-2" name="sec-2-5-2"></a>
@@ -301,20 +301,20 @@
 
 2.  request and response
 
-    -   request {"abs_path" : {"user_name" : <name>, "path" : <path>}, "file_inf" : {"name" : <name>, "frag_num" : <num>, "if_file" : <if_file>, "file_sha1" : <sha1>, "file_md5" : <md5>, "frag_arr" : [array of frags]}, "authen_token" : "<token>"}
+    -   request {"abs_path" : {"user_name" : <name>, "path" : <path>}, "file_inf" : {"name" : <name>, "frag_num" : <num>, "if_file" : <if_file>, "file_sha1" : <sha1>, "file_md5" : <md5>, "frag_arr" : [array of frags]}, "authen_token" : "token"}
         -   if_file == 1 means it's a file, otherwise a directory
     -   response {"sec" : true}
 
 3.  e.g.
 
     -   fail create
-        -   curl -s "<http://localhost:3000/api/v1/virfiles>" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "file_inf":{"name":"ff2", "frag_num":2, "if_file": true, "file_sha1":"123", "file_md5":"123"}, "frag_arr" : [{"addr":"www/baidu/com", "index":1, "sha1":"123", "md5":"123", "server_name":"xinlang"}, {"addr":"www.google.com", "index":2, "sha1":"123", "md5":"123", "server_name":"xinlang"}], "authen_token" : "wrong"}'
+        -   curl -s "http://localhost:3000/api/v1/virfiles" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "file_inf":{"name":"ff2", "frag_num":2, "if_file": true, "file_sha1":"123", "file_md5":"123"}, "frag_arr" : [{"addr":"www/baidu/com", "index":1, "sha1":"123", "md5":"123", "server_name":"xinlang"}, {"addr":"www.google.com", "index":2, "sha1":"123", "md5":"123", "server_name":"xinlang"}], "authen_token" : "wrong"}'
         -   403 error
     -   create a file successful
-        -   curl -s "<http://localhost:3000/api/v1/virfiles>" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "file_inf":{"name":"ff2", "frag_num":2, "if_file": true, "file_sha1":"123", "file_md5":"123"}, "frag_arr" : [{"addr":"www/baidu/com", "index":1, "sha1":"123", "md5":"123", "server_name":"xinlang"}, {"addr":"www.google.com", "index":2, "sha1":"123", "md5":"123", "server_name":"xinlang"}], "authen_token" : "dag=="}'
+        -   curl -s "http://localhost:3000/api/v1/virfiles" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "file_inf":{"name":"ff2", "frag_num":2, "if_file": true, "file_sha1":"123", "file_md5":"123"}, "frag_arr" : [{"addr":"www/baidu/com", "index":1, "sha1":"123", "md5":"123", "server_name":"xinlang"}, {"addr":"www.google.com", "index":2, "sha1":"123", "md5":"123", "server_name":"xinlang"}], "authen_token" : "dag=="}'
     
     -   create a directory successful
-        -   curl -s "<http://localhost:3000/api/v1/virfiles>" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "file_inf":{"name":"firstd1", "frag_num":0, "if_file":false}, "authen_token":"sdg=="}'
+        -   curl -s "http://localhost:3000/api/v1/virfiles" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":""}, "file_inf":{"name":"firstd1", "frag_num":0, "if_file":false}, "authen_token":"sdg=="}'
         -   {"suc":true}
 
 ### <a id="showFrag" name="showFrag"></a> show<a id="sec-2-5-3" name="sec-2-5-3"></a>
@@ -335,10 +335,10 @@
 3.  e.g.
 
     -   directory
-        -   curl -s "<http://localhost:3000/api/v1/virfiles/show>" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd1"}, "authen_token":"1ZOmWA=="}'
+        -   curl -s "http://localhost:3000/api/v1/virfiles/show" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd1"}, "authen_token":"1ZOmWA=="}'
         -   {"if_file":false,"frag_num":0}
     -   file
-        -   curl -s "<http://localhost:3000/api/v1/virfiles/show>" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"first"}, "authen_token":"ZOmWA=="}'
+        -   curl -s "http://localhost:3000/api/v1/virfiles/show" -X POST -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"first"}, "authen_token":"ZOmWA=="}'
         -   {"if_file":true,"frag_num":2,"file_sha1":"123","file_md5":"123","frag_list":[{"addr":"www.google.com","index":2,"sha1":"123","md5":"123","server_name":"xinlang"},{"addr":"www/baidu/com","index":1,"sha1":"123","md5":"123","server_name":"xinlang"}]}
 
 ### <a id="deleteFile" name="deleteFile"></a> destroy<a id="sec-2-5-4" name="sec-2-5-4"></a>
@@ -355,7 +355,7 @@
 
 3.  e.g.
 
-    -   curl -s "<http://localhost:3000/api/v1/virfiles/delete>" -X DELETE -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd"}, "authen_token":"C1ZOmWA=="}'
+    -   curl -s "http://localhost:3000/api/v1/virfiles/delete" -X DELETE -H 'Content-Type: application/json' -d '{"abs_path":{"user_name":"test00", "path":"firstd"}, "authen_token":"C1ZOmWA=="}'
     -   {"suc":true}
 
 ## <a id="testHello" name="testHello"></a> test hello<a id="sec-2-6" name="sec-2-6"></a>
@@ -406,4 +406,4 @@ only for test
     -   *Rails.application.config.filter_parameters += [:password]* in *config/initializers/filter_parameter_logging.rb*
     -   Processing UsersController#create (for 127.0.0.1 at 2009-01-02 11:02:33) [POST]
 
-Parameters: {"user"=>{"name"=>"susan", "password_confirmation"=>"[FILTERED]", "password"=>"[FILTERED]"}, "commit"=>"Register", "action"=>"create", "authenticity_token"=>"9efc03bcc37191d8a6dc3676e2e7890ecdfda0b5", "controller"=>"users"}
+Parameters: {"user"=>{"name"="susan", "password_confirmation"="[FILTERED]", "password"="[FILTERED]"}, "commit"="Register", "action"="create", "authenticity_token"="9efc03bcc37191d8a6dc3676e2e7890ecdfda0b5", "controller"="users"}
